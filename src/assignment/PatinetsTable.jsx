@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import MultiRangeSlider from "./MultirangeSlider";
 
 import "./multiRangeSlider.css";
@@ -10,7 +10,9 @@ const PatientsTable = () => {
   const [maxAge, setMaxAge] = useState(100);
   const { filteredPatients, loading } = usePatientInformation(minAge, maxAge);
 
-  useEffect(() => {}, filteredPatients);
+  const memoizedFilteredPatients = useMemo(() => filteredPatients, [filteredPatients]);
+
+  useEffect(() => {}, [memoizedFilteredPatients])
 
   const handleChange = ({ min, max }) => {
     setMinAge(min);
@@ -33,8 +35,8 @@ const PatientsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredPatients &&
-            filteredPatients.map((record, index) => {
+          {memoizedFilteredPatients &&
+            memoizedFilteredPatients.map((record, index) => {
               const { id, name, gender, birthDate, address, telecom } =
                 record.resource;
 

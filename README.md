@@ -1,4 +1,4 @@
-# PatientsTable< 
+# PatientsTable
 
 The custom hook supports fetching patient information based on age (calculated using the patient's birthdate) with a given API.
 
